@@ -1,0 +1,111 @@
+:root { 
+    font-size: 1dvw; 
+    --white: #f8f8f3; 
+    --red: #f96969; 
+    --green: #8ff48f;
+    --blue: #68baf4;
+    --yellow: #f2e266; 
+    --black: #1d1d1d;
+}
+
+@font-face {
+    font-family: "traffolight";
+    src: url("Traffolight.otf");
+}
+
+body {
+    padding: 0;
+    margin: 0; 
+    background-color: var(--white);
+}
+
+h1 {
+    color: var(--black);
+    font-size: 1.5rem;
+    font-family: "traffolight"; 
+}
+
+p {
+    color: var(--black);
+    font-size: 1rem;
+    font-family: "traffolight";
+}
+
+/*
+div { 
+    border: 1px black solid; 
+}
+*/
+
+#games-container { 
+    position: relative;
+    margin: auto; 
+    width: 60rem;
+    height: fit-content;
+    top: 2rem;
+}
+
+.game {
+    position: relative; 
+    width: 100%;
+    height: 15rem; 
+    margin-bottom: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3);
+}
+
+#game1 { 
+    background-color: var(--red);
+}
+
+#game2 {
+    background-color: var(--green);
+}
+
+#game3 {
+    background-color: var(--blue);
+}
+
+#game4 {
+    background-color: var(--yellow);
+}
+
+.game-image {
+    background-color: var(--white);
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    width: 11rem;
+    height: 11rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3) inset;
+}
+
+.game-text-container { 
+    background-color: var(--white);
+    position: relative; 
+    top: 2rem;
+    left: 15rem;
+    width: 43rem;
+    height: 11rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3) inset;
+}
+
+.title-container {
+    position: absolute;
+    top: 1.5rem;
+    width: fit-content;
+    height: fit-content;
+    left: 50%; 
+    transform: translate(-50%, 0);
+}
+
+.text-container {
+    position: absolute;
+    top: 4rem;
+    width: fit-content;
+    height: fit-content;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
