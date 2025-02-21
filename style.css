@@ -2,7 +2,7 @@
     font-size: 1dvw; 
     --white: #f8f8f3; 
     --red: #f96969; 
-    --green: #8ff48f;
+    --green: #69f169;
     --blue: #68baf4;
     --yellow: #f2e266; 
     --black: #1d1d1d;
@@ -73,10 +73,10 @@ div {
 .game-image {
     background-color: var(--white);
     position: absolute;
-    top: 2rem;
-    left: 2rem;
-    width: 11rem;
-    height: 11rem;
+    top: 1rem;
+    left: 1rem;
+    width: 13rem;
+    height: 13rem;
     border-radius: 0.5rem;
     box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3) inset;
 }
@@ -84,10 +84,10 @@ div {
 .game-text-container { 
     background-color: var(--white);
     position: relative; 
-    top: 2rem;
+    top: 1rem;
     left: 15rem;
-    width: 43rem;
-    height: 11rem;
+    width: 44rem;
+    height: 13rem;
     border-radius: 0.5rem;
     box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3) inset;
 }
