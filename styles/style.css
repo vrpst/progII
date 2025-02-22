@@ -11,12 +11,12 @@
 
 @font-face {
     font-family: "Swansea";
-    src: url("Swansea.ttf");
+    src: url("../fonts/Swansea.ttf");
 }
 
 @font-face {
     font-family: "SwanseaBold";
-    src: url("SwanseaBold.ttf");
+    src: url("../fonts/SwanseaBold.ttf");
 }
 
 body {
