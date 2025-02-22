@@ -1,0 +1,25 @@
+#game-container { 
+    position: relative;
+    margin: auto; 
+    width: 60rem;
+    height: 15rem;
+    top: 3rem;
+    margin-top: 3rem;
+    border: 1px black solid;
+}
+
+.line {
+    fill: none;
+    stroke: var(--red);
+    stroke-width: 0.5;
+    stroke-dasharray: var(--notes-path-length);
+    stroke-dashoffset: var(--notes-path-length);
+    animation: draw 1.5s linear 1; 
+    animation-fill-mode: forwards; 
+}
+
+@keyframes draw {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}

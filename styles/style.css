@@ -7,6 +7,7 @@
     --yellow: #f2e266; 
     --black: #1d1d1d;
     --grey: #818080;
+    --notes-path-length: 0px;
 }
 
 @font-face {
