@@ -2,15 +2,21 @@
     font-size: 1dvw; 
     --white: #f8f8f3; 
     --red: #f96969; 
-    --green: #69f169;
+    --green: #70e261;
     --blue: #68baf4;
     --yellow: #f2e266; 
     --black: #1d1d1d;
+    --grey: #818080;
 }
 
 @font-face {
-    font-family: "traffolight";
-    src: url("Traffolight.otf");
+    font-family: "Swansea";
+    src: url("Swansea.ttf");
+}
+
+@font-face {
+    font-family: "SwanseaBold";
+    src: url("SwanseaBold.ttf");
 }
 
 body {
@@ -21,14 +27,21 @@ body {
 
 h1 {
     color: var(--black);
-    font-size: 1.5rem;
-    font-family: "traffolight"; 
+    font-size: 4rem;
+    font-family: "SwanseaBold"; 
+    text-decoration: underline;
+}
+
+h2 {
+    color: var(--black);
+    font-size: 1.75rem;
+    font-family: "SwanseaBold"; 
 }
 
 p {
     color: var(--black);
-    font-size: 1rem;
-    font-family: "traffolight";
+    font-size: 1.25rem;
+    font-family: "Swansea";
 }
 
 /*
@@ -37,19 +50,37 @@ div {
 }
 */
 
+#header-container {
+    background-color: var(--grey);
+    position: fixed; 
+    width: 100%;
+    top: 0;
+    height: 3rem; 
+    z-index: 1000;
+    box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3);
+}
+
+#section-title-container {
+    position: relative;
+    margin: auto;
+    width: 60rem;
+    height: fit-content; 
+    top: 3rem;
+}
+
 #games-container { 
     position: relative;
     margin: auto; 
     width: 60rem;
     height: fit-content;
-    top: 2rem;
+    top: 3rem;
 }
 
 .game {
     position: relative; 
     width: 100%;
     height: 15rem; 
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     border-radius: 1rem;
     box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3);
 }
@@ -59,7 +90,7 @@ div {
 }
 
 #game2 {
-    background-color: var(--green);
+    background-color: var(--yellow);
 }
 
 #game3 {
@@ -67,7 +98,7 @@ div {
 }
 
 #game4 {
-    background-color: var(--yellow);
+    background-color: var(--green);
 }
 
 .game-image {
@@ -81,7 +112,7 @@ div {
     box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3) inset;
 }
 
-.game-text-container { 
+.game-text-area { 
     background-color: var(--white);
     position: relative; 
     top: 1rem;
@@ -92,9 +123,17 @@ div {
     box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3) inset;
 }
 
+.game-text-container {
+    position: absolute;
+    top: 1rem;
+    left: 7rem;
+    width: 30rem;
+    height: 11rem;
+}
+
 .title-container {
     position: absolute;
-    top: 1.5rem;
+    top: 0;
     width: fit-content;
     height: fit-content;
     left: 50%; 
@@ -103,9 +142,9 @@ div {
 
 .text-container {
     position: absolute;
-    top: 4rem;
-    width: fit-content;
+    width: 100%;
     height: fit-content;
+    bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
 }
