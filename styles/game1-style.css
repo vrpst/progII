@@ -28,7 +28,15 @@
     overflow: hidden;
 }
 
-#svg-container {
+#static-svg-container {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 58rem;
+    height: 13rem;
+}
+
+#notes-svg-container {
     position: absolute;
     width: fit-content;
     height: fit-content;
@@ -47,4 +55,10 @@
     fill: none;
     stroke: var(--grey);
     stroke-width: 0.1;
+}
+
+.thick-line {
+    fill: none;
+    stroke: var(--grey);
+    stroke-width: 0.5;
 }
