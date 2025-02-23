@@ -1,3 +1,4 @@
+// create random number array for notes 
 let numNotes:number = 50;
 let notelist:number[] = new Array(numNotes); 
 for (let i = 0; i < notelist.length; i++) {
@@ -5,6 +6,7 @@ for (let i = 0; i < notelist.length; i++) {
     notelist[i] = Math.floor(Math.random() * 3); 
 }
 
+// create svg of background notes timeings 
 let svgWidth = (numNotes + 1) * 5
 let svgCode = `<svg width="${svgWidth.toString()}rem" height="13rem" viewBox="0 0 ${svgWidth.toString()} 13" xmlns="http://www.w3.org/2000/svg">`;
 let currentX:number = 5; 
@@ -12,6 +14,8 @@ for (let i = 0; i < numNotes; i++) {
     svgCode = svgCode + `<line class="thin-line" x1="${currentX}" y1="0" x2="${currentX}" y2="13" stroke-linecap="round"/>`;
     currentX += 5;
 }
+
+// create svg connecting notes 
 svgCode = svgCode + `<path id="noteslist" class="line" d="`;
 let prevX:number = 5;
 let prevY:number = 0;
@@ -60,16 +64,36 @@ for (let i = 0; i < notelist.length; i++) {
     }
 }
 svgCode = svgCode + `" stroke-linecap="round"/></svg>`;
+
+// create static svg 
+let staticSvgCode = `
+<svg width="58rem" height="13rem" viewBox="0 0 58 13" xmlns="http://www.w3.org/2000/svg">
+    <line class="thick-line" x1="50" y1="0.75" x2="50" y2="12.25" stroke-linecap="round"/>
+</svg>`
+
+// add svgs to "game-inner" div
 let svgContainer = document.createElement('div'); 
-svgContainer.id = 'svg-container';
+svgContainer.id = 'notes-svg-container';
 svgContainer.innerHTML = svgCode;
+let staticSvgContainer = document.createElement('div');
+staticSvgContainer.id = 'static-svg-container';
+staticSvgContainer.innerHTML = staticSvgCode;
 let gameContainer = document.getElementById('game-inner') as HTMLElement | null;
 if (gameContainer) {
     gameContainer.appendChild(svgContainer);
+    gameContainer.appendChild(staticSvgContainer);
 }
-svgContainer.style.transitionDuration = `${(numNotes * 0.5 + 5).toString()}s` // note separation time + travel time to cross the screen
-svgContainer.style.left =  `-${svgWidth.toString()}rem`
-setTimeout(function(){
-    svgContainer.style.left = `58rem`;
-},1);
 
+// set transition timings and positions 
+let noteTime = 0.75; 
+svgContainer.style.transitionDuration = `${(numNotes * noteTime + 12 * noteTime).toString()}s` 
+svgContainer.style.left =  `-${svgWidth.toString()}rem`
+
+// start game 
+function startGame() {
+    svgContainer.style.left = `55rem`;
+    let button = document.getElementById('start-button') as HTMLElement | null;
+    if (button) {
+        button.style.backgroundColor = "var(--grey)";
+    }
+}

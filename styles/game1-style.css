@@ -28,7 +28,15 @@
     overflow: hidden;
 }
 
-#svg-container {
+#static-svg-container {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 58rem;
+    height: 13rem;
+}
+
+#notes-svg-container {
     position: absolute;
     width: fit-content;
     height: fit-content;
@@ -47,4 +55,37 @@
     fill: none;
     stroke: var(--grey);
     stroke-width: 0.1;
+}
+
+.thick-line {
+    fill: none;
+    stroke: var(--grey);
+    stroke-width: 0.5;
+}
+
+#start-button {
+    position: relative;
+    margin: auto; 
+    width: 10rem;
+    height: 3rem;
+    top: 5rem;
+    background-color: var(--red);
+    border-radius: 1rem;
+    box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3);
+    transition: ease-in-out;
+    transition-duration: 0.1s;
+}
+
+#start-text-container {
+    position: relative;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    top: 50%;
+    transform: translate(0,-50%);
+}
+
+#start-button:hover {
+    box-shadow: 0 0.05rem 1.5rem rgba(0,0,0,0.3);
+    transition-duration: 0.1s;
 }
