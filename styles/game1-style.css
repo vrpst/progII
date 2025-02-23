@@ -74,6 +74,7 @@
     box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3);
     transition: ease-in-out;
     transition-duration: 0.1s;
+    cursor: default;
 }
 
 #start-text-container {
