@@ -2,29 +2,49 @@
     position: relative;
     margin: auto; 
     width: 60rem;
-    height: 15rem;
+    height: fit-content;
     top: 3rem;
     margin-top: 3rem;
+}
+
+#game-border {
+    position: relative; 
+    width: 60rem;
+    height: 15rem; 
+    border-radius: 1rem;
+    box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3);
+    background-color: var(--red);
+}
+
+#game-inner {
+    background-color: var(--white);
+    position: absolute; 
+    top: 1rem;
+    left: 1rem;
+    width: 58rem;
+    height: 13rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3) inset;
+    overflow: hidden;
+}
+
+#svg-container {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    top: 0;
+    left: 0;
+    transition: linear;
 }
 
 .line {
     fill: none;
     stroke: var(--red);
     stroke-width: 0.5;
-    stroke-dasharray: var(--notes-path-length);
-    stroke-dashoffset: var(--notes-path-length);
-    animation: draw 1.5s linear 1; 
-    animation-fill-mode: forwards; 
 }
 
 .thin-line {
     fill: none;
     stroke: var(--grey);
     stroke-width: 0.1;
-}
-
-@keyframes draw {
-    100% {
-        stroke-dashoffset: 0;
-    }
 }
