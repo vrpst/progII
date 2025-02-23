@@ -88,7 +88,12 @@ if (gameContainer) {
 let noteTime = 0.75; 
 svgContainer.style.transitionDuration = `${(numNotes * noteTime + 12 * noteTime).toString()}s` 
 svgContainer.style.left =  `-${svgWidth.toString()}rem`
-setTimeout(function(){
-    svgContainer.style.left = `55rem`;
-},1);
 
+// start game 
+function startGame() {
+    svgContainer.style.left = `55rem`;
+    let button = document.getElementById('start-button') as HTMLElement | null;
+    if (button) {
+        button.style.backgroundColor = "var(--grey)";
+    }
+}

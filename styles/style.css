@@ -38,6 +38,10 @@ p {
     font-family: "Swansea";
 }
 
+.light {
+    color: var(--white);
+}
+
 #header-container {
     background-color: var(--grey);
     position: fixed; 
