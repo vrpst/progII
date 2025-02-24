@@ -102,10 +102,30 @@ svgContainer.style.transitionDuration = `${(numNotes * noteTime + 12 * noteTime)
 svgContainer.style.left =  `-${svgWidth.toString()}rem`
 
 // start game 
+let gameStarted:Boolean = false;
+let startTime:number;
 function startGame() {
     svgContainer.style.left = `55rem`;
     let button = document.getElementById('start-button') as HTMLElement | null;
+    gameStarted = true;
+    startTime = Date.now();
     if (button) {
         button.style.backgroundColor = "var(--grey)";
     }
 }
+document.addEventListener("keypress", e => {
+    if (gameStarted) {
+        switch (e.key.toLowerCase()) {
+            case "k":
+                console.log("bottom beat at " + (Date.now() - startTime));
+                break;
+            case "o":
+                console.log("middle beat at " + (Date.now() - startTime));
+                break;
+            case "p":
+                console.log("top beat at " + (Date.now() - startTime));
+        }
+    } else {
+        console.log("Start the game first")
+    }
+})
