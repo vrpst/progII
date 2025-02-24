@@ -90,3 +90,10 @@
     box-shadow: 0 0.05rem 1.5rem rgba(0,0,0,0.3);
     transition-duration: 0.1s;
 }
+.static-circle{
+    cx: 50;
+    r: 0.6;
+}
+.circle{
+    z-index: 1000;
+}
