@@ -10,4 +10,4 @@ To get the code to run on the webpage after changes, follow these steps:
 - Run the webpage as you normally would
 
 ## Alternative to transpiling each file
-To set up tsc to automatically compile updated .ts files in "scrips", run "tsc -w" 
+To set up tsc to automatically compile updated .ts files in "scripts", run "tsc -w" 
