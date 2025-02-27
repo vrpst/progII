@@ -1,7 +1,10 @@
 const path = require("path");
 
 module.exports = {
-    entry: "./src/index.tsx",
+    entry: {
+        script: "./src/script.ts",
+        "game1-script": "./src/game1-script.ts",
+    },
     module: {
         rules: [
             {
@@ -15,7 +18,7 @@ module.exports = {
         extensions: [".tsx", ".ts", ".js"],
     },
     output: {
-        filename: "bundle.js",
+        filename: "[name].js",
         path: path.resolve(__dirname, "dist"),
     },
 };
