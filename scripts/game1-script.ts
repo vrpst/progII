@@ -110,7 +110,7 @@ function startGame() {
     gameStarted = true;
     startTime = Date.now();
     if (button) {
-        button.style.backgroundColor = "var(--grey)";
+        button.id = 'start-button-pressed';
     }
 }
 document.addEventListener("keypress", e => {

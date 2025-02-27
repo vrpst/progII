@@ -90,6 +90,21 @@
     box-shadow: 0 0.05rem 1.5rem rgba(0,0,0,0.3);
     transition-duration: 0.1s;
 }
+
+#start-button-pressed {
+    position: relative;
+    margin: auto; 
+    width: 10rem;
+    height: 3rem;
+    top: 5rem;
+    background-color: var(--grey);
+    border-radius: 1rem;
+    box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3);
+    transition: ease-in-out;
+    transition-duration: 0.1s;
+    cursor: default;
+}
+
 .static-circle{
     cx: 50;
     r: 0.6;
