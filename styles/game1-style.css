@@ -28,41 +28,6 @@
     overflow: hidden;
 }
 
-#static-svg-container {
-    position: absolute; 
-    top: 0;
-    left: 0;
-    width: 58rem;
-    height: 13rem;
-}
-
-#notes-svg-container {
-    position: absolute;
-    width: fit-content;
-    height: fit-content;
-    top: 0;
-    left: 0;
-    transition: linear;
-}
-
-.line {
-    fill: none;
-    stroke: var(--red);
-    stroke-width: 0.5;
-}
-
-.thin-line {
-    fill: none;
-    stroke: var(--grey);
-    stroke-width: 0.1;
-}
-
-.thick-line {
-    fill: none;
-    stroke: var(--grey);
-    stroke-width: 0.5;
-}
-
 #start-button {
     position: relative;
     margin: auto; 
@@ -105,10 +70,7 @@
     cursor: default;
 }
 
-.static-circle{
-    cx: 50;
-    r: 0.6;
-}
-.circle{
-    z-index: 1000;
+#game-canvas {
+    width: 58rem;
+    height: 13rem;
 }
