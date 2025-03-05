@@ -1,17 +1,4 @@
 {
-    "name": "progii",
-    "version": "0.0.1",
-    "description": "",
-    "homepage": "https://github.com/vrpst/progII#readme",
-    "bugs": {
-        "url": "https://github.com/vrpst/progII/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/vrpst/progII.git"
-    },
-    "license": "ISC",
-    "author": "",
     "type": "module",
     "scripts": {
         "postinstall": "cd server && npm i",
