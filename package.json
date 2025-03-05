@@ -16,7 +16,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack",
-        "start": "ts-node ./server/server.ts",
+        "start": "tsx ./server/server.ts",
         "run-dev": "npm run build && npm start"
     },
     "devDependencies": {
@@ -24,7 +24,7 @@
         "@types/react": "^19.0.10",
         "@types/react-dom": "^19.0.4",
         "ts-loader": "^9.5.2",
-        "ts-node": "^10.9.2",
+        "tsx": "^4.19.3",
         "webpack": "^5.98.0",
         "webpack-cli": "^6.0.1"
     },
