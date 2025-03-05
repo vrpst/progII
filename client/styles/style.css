@@ -11,13 +11,13 @@
 }
 
 @font-face {
-    font-family: "Swansea";
-    src: url("../fonts/Swansea.ttf");
+    font-family: "Baskerville";
+    src: url("../fonts/LibreBaskerville-Regular.otf");
 }
 
 @font-face {
-    font-family: "SwanseaBold";
-    src: url("../fonts/SwanseaBold.ttf");
+    font-family: "BaskervilleBold";
+    src: url("../fonts/LibreBaskerville-Bold.otf");
 }
 
 body {
@@ -29,13 +29,13 @@ body {
 h2 {
     color: var(--black);
     font-size: 1.75rem;
-    font-family: "SwanseaBold"; 
+    font-family: "BaskervilleBold"; 
 }
 
 p {
     color: var(--black);
     font-size: 1.25rem;
-    font-family: "Swansea";
+    font-family: "Baskerville";
     line-height: 1.5rem;
 }
 
