@@ -1,10 +1,10 @@
 :root { 
     font-size: 1dvw; 
     --white: #f8f8f3; 
-    --red: #f96969; 
-    --green: #70e261;
-    --blue: #68baf4;
-    --yellow: #f2e266; 
+    --red: #99D699; 
+    --green: #FFC999;
+    --blue: #C1BADE;
+    --yellow: #B0D0D3; 
     --black: #1d1d1d;
     --grey: #acaaaa;
     --notes-path-length: 0px;
