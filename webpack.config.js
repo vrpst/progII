@@ -5,7 +5,7 @@ const __dirname = import.meta.dirname;
 export default {
     entry: Object.fromEntries(
         glob
-            .sync("./src/*")
+            .sync("./src/*.{ts,tsx}")
             .map((file) => [
                 path.basename(file, path.extname(file)),
                 path.resolve(__dirname, file),
