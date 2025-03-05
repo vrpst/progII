@@ -24,14 +24,19 @@ if (canvas.getContext) {
     const ctx = canvas.getContext('2d');
     if (red) {
         ctx.strokeStyle = red;
-        ctx.lineWidth = remToPixels(0.5);
-        ctx.beginPath();
-        ctx.arc(100, canvas.height/2, remToPixels(0.5), 0, 2*Math.PI);
-        ctx.stroke() 
     }
+    else { 
+        ctx.strokeStyle = 'red';
+    }
+    ctx.lineWidth = remToPixels(0.5);
+    ctx.beginPath();
+    ctx.arc(remToPixels(6.5), canvas.height/2, remToPixels(0.5), 0, 2*Math.PI);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(remToPixels(10), canvas.height/2, remToPixels(0.5), 0, 2*Math.PI);
+    ctx.stroke();
 } 
 else {
-    // make this output something to the user later 
-    // e.g. unsupported broswer
-    console.log('cavas not supported on this browser');
+    // make this output something to the user later e.g. unsupported browser
+    console.log('canvas not supported on this browser');
 }
