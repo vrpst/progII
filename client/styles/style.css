@@ -36,6 +36,7 @@ p {
     color: var(--black);
     font-size: 1.25rem;
     font-family: "Swansea";
+    line-height: 1.5rem;
 }
 
 .light {
