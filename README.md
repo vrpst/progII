@@ -8,7 +8,3 @@
 
 # Build Instructions
 - Build TypeScript with `npm run build`
-
-# How to add new scripts
-- Make a `ts` or `tsx` file in `src`
-- Update entry in `webpack.config.cjs` accordingly
