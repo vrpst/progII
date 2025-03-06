@@ -5,7 +5,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack",
         "start": "cd server && npm start",
-        "dev": "npm run build && npm start"
+        "dev": "npm run build && npm start",
+        "midi-test": "cd server && node midi/midi-testing.js"
     },
     "devDependencies": {
         "@types/react": "^19.0.10",
