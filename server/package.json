@@ -2,7 +2,8 @@
     "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "tsx server.ts"
+        "start": "tsx server.ts",
+        "midi-test": "tsx midi/midi-testing.ts"
     },
     "dependencies": {
         "express": "^4.21.2",
