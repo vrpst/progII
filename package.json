@@ -1,37 +1,21 @@
 {
-    "name": "progii",
-    "version": "0.0.1",
-    "description": "",
-    "homepage": "https://github.com/vrpst/progII#readme",
-    "bugs": {
-        "url": "https://github.com/vrpst/progII/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/vrpst/progII.git"
-    },
-    "license": "ISC",
-    "author": "",
     "type": "module",
     "scripts": {
+        "postinstall": "cd server && npm i",
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack",
-        "start": "tsx ./server/server.ts",
+        "start": "cd server && npm start",
         "dev": "npm run build && npm start"
     },
     "devDependencies": {
-        "@types/express": "^5.0.0",
         "@types/react": "^19.0.10",
         "@types/react-dom": "^19.0.4",
+        "glob": "^11.0.1",
         "ts-loader": "^9.5.2",
-        "tsx": "^4.19.3",
         "webpack": "^5.98.0",
         "webpack-cli": "^6.0.1"
     },
     "dependencies": {
-        "@tonejs/midi": "^2.0.28",
-        "express": "^4.21.2",
-        "fs": "^0.0.1-security",
         "react": "^19.0.0",
         "react-dom": "^19.0.0"
     }

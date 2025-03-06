@@ -1,10 +1,16 @@
-const path = require("path");
+import path from "path";
+import { glob } from "glob";
+const __dirname = import.meta.dirname;
 
-module.exports = {
-    entry: {
-        script: "./src/script.ts",
-        "game1-script": "./src/game1-script.ts",
-    },
+export default {
+    entry: Object.fromEntries(
+        glob
+            .sync("./src/*.{ts,tsx}")
+            .map((file) => [
+                path.basename(file, path.extname(file)),
+                path.resolve(__dirname, file),
+            ]),
+    ),
     module: {
         rules: [
             {
