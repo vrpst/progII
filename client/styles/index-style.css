@@ -12,8 +12,6 @@
     width: 100%;
     height: 15rem; 
     border-radius: 1rem;
-    transition: ease-in-out;
-    transition-duration: 0.1s; 
     margin-bottom: 3rem;
 }
 
