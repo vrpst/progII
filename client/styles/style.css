@@ -50,8 +50,8 @@ p {
     top: 0;
     height: 7dvh; 
     z-index: 1000;
-    box-shadow: 0 0.05rem 0.4rem rgba(0,0,0,0.3);
 }
+
 #content-container {
     display: flex;
     flex-wrap: wrap;
