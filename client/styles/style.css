@@ -43,7 +43,9 @@ p {
 }
 
 #header-container {
-    background-color: var(--grey);
+    background-color: rgba(150, 150, 150, 0.4);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     position: fixed; 
     width: 100%;
     top: 0;
