@@ -85,8 +85,8 @@ if (rootStyle) {
 // create canvas
 const canvas = document.createElement('canvas');
 canvas.id = 'game-canvas';
-canvas.width = remToPixels(58);
-canvas.height = remToPixels(13);
+canvas.width = remToPixels(59);
+canvas.height = remToPixels(14);
 let gameContainer = document.getElementById('game-inner') as HTMLElement | null;
 if (gameContainer) {
     gameContainer.appendChild(canvas);

@@ -3,7 +3,7 @@
     margin: auto; 
     width: 60rem;
     height: fit-content;
-    top: 3rem;
+    top: 7dvh;
     margin-top: 3rem;
 }
 
@@ -18,11 +18,11 @@
 #game-inner {
     background-color: var(--white);
     position: absolute; 
-    top: 1rem;
-    left: 1rem;
-    width: 58rem;
-    height: 13rem;
-    border-radius: 0.5rem;
+    top: 0.5rem;
+    left: 0.5rem;
+    width: 59rem;
+    height: 14rem;
+    border-radius: 0.6rem;
     overflow: hidden;
 }
 
@@ -66,6 +66,6 @@
 }
 
 #game-canvas {
-    width: 58rem;
-    height: 13rem;
+    width: 59rem;
+    height: 14rem;
 }
