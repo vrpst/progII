@@ -36,8 +36,10 @@ class Phrase {
     async drawNotes() {
         for (let note of this._notes) {
             note.draw();
-            let pauseTime: number = note.getDuration(); 
-            await new Promise(f => setTimeout(f, pauseTime * 1000));
+            let pauseTime: number | null = note.getDuration(); 
+            if (pauseTime) {
+                await new Promise(f => setTimeout(f, pauseTime * 1000));
+            }
         }
     }
 }
@@ -63,15 +65,19 @@ class Note {
     }
 
     draw() { 
-        ctx.beginPath();
-        ctx.arc(remToPixels(this._xPos * this._spacingMult + this._startSpacing), canvas.height/2, remToPixels(0.5), 0, 2*Math.PI);
-        ctx.stroke(); 
+        if (ctx) {
+            ctx.beginPath();
+            if (this._xPos != null) {
+                ctx.arc(remToPixels(this._xPos * this._spacingMult + this._startSpacing), canvas.height/2, remToPixels(0.5), 0, 2*Math.PI);
+            }
+            ctx.stroke();
+        } 
     }
 }
 
 // get css root variables 
 let rootStyle = window.getComputedStyle(document.body) as CSSStyleDeclaration | null; 
-let red = null;
+let red: string | null = null;
 if (rootStyle) { 
     red = rootStyle.getPropertyValue('--red');
 } 
@@ -96,14 +102,16 @@ let levelObject: Level = new Level(1, levelInput);
 // draw circles
 if (canvas.getContext) {
     ctx = canvas.getContext('2d');
-    if (red) {
-        globalThis.ctx.strokeStyle = red;
+    if (ctx) {
+        if (red) {
+            ctx.strokeStyle = red;
+        }
+        else { 
+            ctx.strokeStyle = 'red';
+        }
+        ctx.lineWidth = remToPixels(0.5);
+        levelObject.drawNotes(0);
     }
-    else { 
-        ctx.strokeStyle = 'red';
-    }
-    ctx.lineWidth = remToPixels(0.5);
-    levelObject.drawNotes(0);
 }
 else {
     // make this output something to the user later e.g. unsupported browser
