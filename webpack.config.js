@@ -28,4 +28,7 @@ export default {
         path: path.resolve(__dirname, "client/dist"),
     },
     mode: "development",
+    cache: {
+        type: "filesystem",
+    },
 };
