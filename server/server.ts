@@ -1,6 +1,6 @@
-import express from "express";
+import express, { Express } from "express";
 
-const app = express();
+const app: Express = express();
 
 app.use(express.static("../client"));
 app.use(express.static("../client/pages/"));
