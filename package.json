@@ -15,7 +15,7 @@
         "webpack-cli": "^6.0.1"
     },
     "dependencies": {
-        "midi-file": "^1.2.4",
+        "@tonejs/midi": "^2.0.28",
         "react": "^19.0.0",
         "react-dom": "^19.0.0"
     }

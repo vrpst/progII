@@ -1,5 +1,3 @@
-import { parseMidi as parse_midi } from "midi-file";
+import { Midi } from "@tonejs/midi";
 
-fetch("test.mid")
-    .then((req) => req.bytes())
-    .then((bytes) => console.log(parse_midi(bytes)));
+Midi.fromUrl("test.mid").then((midi) => console.log(midi));
