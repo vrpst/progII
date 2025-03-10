@@ -7,12 +7,16 @@ interface MidiData {
     time: number;
 }
 
-Midi.fromUrl("test.mid").then((midi) => {
+export async function parse_midi(url: string): Promise<MidiData[][]> {
+    const midi = await Midi.fromUrl(url);
+
     const notes_array: Note[][] = midi.tracks.map((track) => track.notes);
+
     const data: MidiData[][] = notes_array.map((notes) =>
         notes.map(({ pitch, duration, time }) => {
             return { pitch, duration, time };
         }),
     );
-    console.log(data);
-});
+
+    return data;
+}
