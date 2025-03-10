@@ -1,8 +1,5 @@
 {
     "compilerOptions": {
-        "noImplicitAny": true,
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true
+        "noImplicitAny": true
     }
 }
