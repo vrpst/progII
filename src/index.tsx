@@ -5,7 +5,6 @@ ReactDom.createRoot(document.body).render(
 	<>
 		<link rel="stylesheet" href="../styles/style.css" />
 		<link rel="stylesheet" href="../styles/index-style.css" />
-		<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 		<div id="header-container"></div>
 		<div id="games-container">
 			<div id="game1" className="game" onClick={() => window.location.href = "game1.html"}>
