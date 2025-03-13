@@ -7,7 +7,7 @@ const build_server = esbuild.build({
     bundle: true,
     platform: "node",
     packages: "external",
-    outdir: path.join(__dirname, "build"),
+    outdir: __dirname,
     format: "esm",
     minify: true,
 });
