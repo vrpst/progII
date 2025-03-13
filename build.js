@@ -9,6 +9,7 @@ const build_server = esbuild.build({
     packages: "external",
     outdir: path.join(__dirname, "build"),
     format: "esm",
+    minify: true,
 });
 
 const build_client = esbuild.build({
