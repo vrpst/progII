@@ -3,7 +3,7 @@ import path from "path";
 const __dirname = import.meta.dirname;
 
 const build_server = esbuild.build({
-    entryPoints: [path.join(__dirname, "./src/server/server.ts")],
+    entryPoints: [path.join(__dirname, "./src/server/server.tsx")],
     bundle: true,
     platform: "node",
     packages: "external",
