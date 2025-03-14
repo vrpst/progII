@@ -8,13 +8,13 @@ function GameContainer({
     name,
     description,
 }: {
-    href: string;
+    href?: string;
     id: string;
     name?: string;
     description?: string;
 }) {
     return (
-        <a href={href} className="game" id={id}>
+        <a {...(href != undefined && { href })} className="game" id={id}>
             <div className="game-image"></div>
             <div className="game-text-area">
                 <div className="game-text-container">
@@ -50,9 +50,9 @@ export default function Index() {
                         id="game1"
                         name="Rhythm Game"
                     />
-                    <GameContainer href="" id="game2" />
-                    <GameContainer href="" id="game3" />
-                    <GameContainer href="" id="game4" />
+                    <GameContainer id="game2" />
+                    <GameContainer id="game3" />
+                    <GameContainer id="game4" />
                 </div>
             </body>
         </html>
