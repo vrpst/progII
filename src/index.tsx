@@ -16,13 +16,7 @@ function GameContainer({
     children?: any;
 }) {
     return (
-        <a
-            {...{
-                ...(href != undefined && { href }),
-                ...(id != undefined && { id }),
-            }}
-            className="game"
-        >
+        <a href={href} id={id} className="game">
             <div className="game-image">{children}</div>
             <div className="game-text-area">
                 <div className="game-text-container">
