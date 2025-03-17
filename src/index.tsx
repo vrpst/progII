@@ -1,28 +1,36 @@
-const place_holder_description =
+const placeholder_description =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do\
 		eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
 function GameContainer({
     href,
     id,
-    name,
-    description,
+    name = "Lorem ipsum",
+    description = placeholder_description,
+    children,
 }: {
     href?: string;
-    id: string;
+    id?: string;
     name?: string;
     description?: string;
+    children?: any;
 }) {
     return (
-        <a {...(href != undefined && { href })} className="game" id={id}>
-            <div className="game-image"></div>
+        <a
+            {...{
+                ...(href != undefined && { href }),
+                ...(id != undefined && { id }),
+            }}
+            className="game"
+        >
+            <div className="game-image">{children}</div>
             <div className="game-text-area">
                 <div className="game-text-container">
                     <div className="title-container">
-                        <h2>{name || "Lorem ipsum"}</h2>
+                        <h2>{name}</h2>
                     </div>
                     <div className="text-container">
-                        <p>{description || place_holder_description}</p>
+                        <p>{description}</p>
                     </div>
                 </div>
             </div>
