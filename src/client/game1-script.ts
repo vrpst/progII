@@ -1,4 +1,5 @@
 declare var ctx: CanvasRenderingContext2D | null; 
+const fps: number = 30;
 
 function remToPixels(rem:number) {    
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -6,24 +7,24 @@ function remToPixels(rem:number) {
 
 // level class 
 class Level {
-    private _speed: number | null = null; 
     private _phrases: Phrase[] = [];
+    private _currentPhrase: number = 0; 
 
-    constructor(speed: number, level: {[key: string]: number}[][]) {
-        this._speed = speed;
+    constructor(level: {[key: string]: number}[][]) {
         for (let phrase of level) {
             this._phrases.push(new Phrase(phrase));
         }
     }
 
-    drawNotes(phraseNo: number) { 
-        this._phrases[phraseNo].drawNotes();
+    drawNotes() { 
+        this._phrases[this._currentPhrase].drawNotes();
     }
 }
 
 // phrase class 
 class Phrase {
     private _notes: Note[] = [];
+    private _currentFrame: number = 0;
 
     constructor(phrase: {[key: string]: number}[]) { 
         let currentX: number = 0; 
@@ -34,13 +35,17 @@ class Phrase {
     }
 
     async drawNotes() {
-        for (let note of this._notes) {
-            note.draw();
-            let pauseTime: number | null = note.getDuration(); 
-            if (pauseTime) {
-                await new Promise(f => setTimeout(f, pauseTime * 1000));
+        this._notes[0].draw();
+        let runningNoteFrame: number = 0;
+        for (let i: number = 1; i < this._notes.length; i++) {
+            let noteDuration: number = this._notes[i - 1].getDuration(); 
+            let noteFrameLength: number = noteDuration * fps; 
+            runningNoteFrame += noteFrameLength; 
+            if (this._currentFrame >= runningNoteFrame) { 
+                this._notes[i].draw();
             }
         }
+        this._currentFrame += 1;
     }
 }
 
@@ -97,7 +102,7 @@ let levelInput: {[key: string]: number}[][] = [
     [{'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 1}, {'duration': 1, 'pitch': 0}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 1}, {'duration': 1, 'pitch': 0}],
     [{'duration': 1, 'pitch': 1}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 0}]
 ];
-let levelObject: Level = new Level(1, levelInput); 
+let levelObject: Level = new Level(levelInput); 
 
 // draw circles
 if (canvas.getContext) {
@@ -110,10 +115,27 @@ if (canvas.getContext) {
             ctx.strokeStyle = 'red';
         }
         ctx.lineWidth = remToPixels(0.5);
-        levelObject.drawNotes(0);
+        //levelObject.drawNotes(0);
     }
 }
 else {
     // make this output something to the user later e.g. unsupported browser
     alert('canvas not supported on this browser');
 }
+
+document.getElementById('start-button').addEventListener('click', () => {
+    let now: number; 
+    let then: number = Date.now(); 
+    const interval: number = 1000 / fps; 
+    let delta; 
+    let running: boolean = true;
+    while (running) { 
+        now = Date.now(); 
+        delta = now - then; 
+        if (delta > interval) { 
+
+            then = now - (delta % interval);
+            levelObject.drawNotes();
+        }
+    }
+});
