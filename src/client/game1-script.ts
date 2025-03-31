@@ -124,18 +124,7 @@ else {
 }
 
 document.getElementById('start-button').addEventListener('click', () => {
-    let now: number; 
-    let then: number = Date.now(); 
-    const interval: number = 1000 / fps; 
-    let delta; 
-    let running: boolean = true;
-    while (running) { 
-        now = Date.now(); 
-        delta = now - then; 
-        if (delta > interval) { 
-
-            then = now - (delta % interval);
-            levelObject.drawNotes();
-        }
-    }
+    setInterval(() => {
+        levelObject.drawNotes();
+    }, 1000/fps)
 });
