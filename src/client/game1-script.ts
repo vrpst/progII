@@ -43,6 +43,13 @@ class Phrase {
             runningNoteFrame += noteFrameLength; 
             if (this._currentFrame >= runningNoteFrame) { 
                 this._notes[i].draw();
+                if (i === this._notes.length - 1) {
+                    console.log('finished drawing notes');
+                    clearInterval(gameInterval); 
+                    setTimeout(() => {
+                        console.log('trigger next stage of level');
+                    }, 1000);
+                }
             }
         }
         this._currentFrame += 1;
@@ -104,7 +111,8 @@ let levelInput: {[key: string]: number}[][] = [
 ];
 let levelObject: Level = new Level(levelInput); 
 
-// draw circles
+// set up drawing 
+let gameInterval: NodeJS.Timeout;
 if (canvas.getContext) {
     ctx = canvas.getContext('2d');
     if (ctx) {
@@ -115,16 +123,20 @@ if (canvas.getContext) {
             ctx.strokeStyle = 'red';
         }
         ctx.lineWidth = remToPixels(0.5);
-        //levelObject.drawNotes(0);
+
+        // set up game loop 
+        document.getElementById('start-button').addEventListener('click', () => {
+            console.log('game start clicked');
+            setTimeout(() => {
+                console.log('started drawing notes');
+                gameInterval = setInterval(() => {
+                    levelObject.drawNotes();
+                }, 1000/fps)
+            }, 1000);
+        });
     }
 }
 else {
     // make this output something to the user later e.g. unsupported browser
     alert('canvas not supported on this browser');
 }
-
-document.getElementById('start-button').addEventListener('click', () => {
-    setInterval(() => {
-        levelObject.drawNotes();
-    }, 1000/fps)
-});
