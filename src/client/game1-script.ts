@@ -1,6 +1,7 @@
 declare var ctx: CanvasRenderingContext2D | null; 
 const fps: number = 30;
-
+const START_SPACING: number = 5; 
+const SPACING_MULT: number = 5;
 function remToPixels(rem:number) {    
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 }
@@ -26,6 +27,9 @@ class Level {
 
     drawNotes() { 
         this._phrases[this._currentPhrase].drawNotes();
+    }
+    drawLine() {
+        this._phrases[this._currentPhrase].drawLine();
     }
 }
 
@@ -91,21 +95,27 @@ class Phrase {
                 }
             }
         }
-        if (ctx) { //T Resets the canvas colour back to --red
-            ctx.strokeStyle, ctx.fillStyle = red;
-        }
+        ctx.strokeStyle, ctx.fillStyle = red; //T Resets the canvas colour back to --red
         this._currentFrame += 1;
+    }
+    drawLine() { //draws a line that follows along with the current frame
+        let x = remToPixels(this._currentFrame / fps * SPACING_MULT + START_SPACING);
+        ctx.strokeStyle = bad
+        ctx.lineWidth = remToPixels(0.2);
+        ctx.beginPath();
+        ctx.moveTo(x, 0.9 * canvas.height);
+        ctx.lineTo(x, 0.1 * canvas.height);
+        ctx.stroke();
+        ctx.lineWidth = remToPixels(0.5);
     }
 }
 
 // note class 
 class Note {
-    private _startSpacing: number = 5; 
-    private _spacingMult: number = 5
     private _xPos: number | null = null; 
     private _duration: number | null = null;
     private _scored: boolean = false; //T false if the user hasn't tried to hit the note, true otherwise
-    private _accuracy: number = Math.floor(Math.random() * 5 - 1); /* T accuracy of user hit for a note
+    private _accuracy: number = -1; /* T accuracy of user hit for a note
     -1 -> not scored yet
     0 -> perfect
     1 -> great
@@ -145,7 +155,6 @@ class Note {
             ctx.beginPath();
             let accuracyText: string = ""
             if (this._xPos != null) { 
-                console.log(this._accuracy)
                 switch (this._accuracy) { //T Changes canvas colour to match the note accuracy
                     case 0: 
                         ctx.strokeStyle = perfect; 
@@ -171,9 +180,10 @@ class Note {
                         ctx.strokeStyle = red; 
                         ctx.fillStyle = red;
                 }
-                let x = remToPixels(this._xPos * this._spacingMult + this._startSpacing);
+                let x = remToPixels(this._xPos * SPACING_MULT + START_SPACING);
                 let y = canvas.height/2;
                 ctx.arc(x, y, remToPixels(0.5), 0, 2*Math.PI);
+                ctx.strokeStyle = black
                 ctx.fillText(accuracyText, x, y - remToPixels(1));
             }
             ctx.stroke();
@@ -188,12 +198,14 @@ let perfect: string | null = null;
 let great: string | null = null;
 let okay: string | null = null;
 let bad: string | null = null;
+let black: string | null = null;
 if (rootStyle) { 
     red = rootStyle.getPropertyValue('--red');
     perfect = rootStyle.getPropertyValue('--perfect');
     great = rootStyle.getPropertyValue('--great');
     okay = rootStyle.getPropertyValue('--okay');
     bad = rootStyle.getPropertyValue('--bad');
+    black = rootStyle.getPropertyPriority('--black');
 } 
 
 // create canvas
@@ -233,8 +245,11 @@ if (canvas.getContext) {
             setTimeout(() => {
                 console.log('started drawing notes');
                 gameInterval = setInterval(() => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height); //scrubs the canvas so the line can move along
                     levelObject.drawNotes();
+                    levelObject.drawLine();
                 }, 1000/fps)
+                console.log("done")
             }, 1000);
         });
     }

@@ -3,6 +3,7 @@
     --great: #eaff00; 
     --okay: #ffb700;
     --bad: #bd0000;
+    --outline: #000000;
 }
 #game-container { 
     position: relative;
