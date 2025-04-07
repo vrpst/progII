@@ -1,6 +1,6 @@
 declare var ctx: CanvasRenderingContext2D | null; 
 const fps: number = 30;
-const START_SPACING: number = 5; 
+const START_SPACING: number = 10; 
 const SPACING_MULT: number = 5;
 function remToPixels(rem:number) {    
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -36,9 +36,10 @@ class Level {
 // phrase class 
 class Phrase {
     private _notes: Note[] = [];
-    private _currentFrame: number = 0;
+    private _currentFrame: number = -30*(START_SPACING/SPACING_MULT);
     private _score: number = 0; //T Total score for the phrase, summed by the Level
     private _badInputCount: number = 0 //T Total times the user has clicked too far from any note (fail state after too many)
+    private _doneDrawing: boolean = false //T To help in ending the draw phase
     constructor(phrase: {[key: string]: number}[]) { 
         let currentX: number = 0; 
         for (let note of phrase) { 
@@ -78,18 +79,19 @@ class Phrase {
         return -40; // too far out
     }
     async drawNotes() {
-        this._notes[0].draw();
         let runningNoteFrame: number = 0;
+        let done: boolean = false;
         for (let i: number = 1; i < this._notes.length; i++) {
             let noteDuration: number = this._notes[i - 1].getDuration(); 
             let noteFrameLength: number = noteDuration * fps; 
             runningNoteFrame += noteFrameLength; 
             if (this._currentFrame >= runningNoteFrame) { 
                 this._notes[i].draw();
-                if (i === this._notes.length - 1) {
+                if (i === this._notes.length - 1 && !this._doneDrawing) {
                     console.log('finished drawing notes');
-                    clearInterval(gameInterval); 
+                    this._doneDrawing = true;
                     setTimeout(() => {
+                        clearInterval(gameInterval); 
                         console.log('trigger next stage of level');
                     }, 1000);
                 }
@@ -249,7 +251,6 @@ if (canvas.getContext) {
                     levelObject.drawNotes();
                     levelObject.drawLine();
                 }, 1000/fps)
-                console.log("done")
             }, 1000);
         });
     }
