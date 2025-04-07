@@ -16,6 +16,14 @@ class Level {
         }
     }
 
+    getTotalScore() { //T Sums score from all phrases and returns total
+        let total: number = 0;
+        for(let phrase of this._phrases) {
+            total += phrase.getScore()
+        }
+        return total
+    }
+
     drawNotes() { 
         this._phrases[this._currentPhrase].drawNotes();
     }
@@ -25,7 +33,8 @@ class Level {
 class Phrase {
     private _notes: Note[] = [];
     private _currentFrame: number = 0;
-
+    private _score: number = 0; //T Total score for the phrase, summed by the Level
+    private _badInputCount: number = 0 //T Total times the user has clicked too far from any note (fail state after too many)
     constructor(phrase: {[key: string]: number}[]) { 
         let currentX: number = 0; 
         for (let note of phrase) { 
@@ -34,6 +43,36 @@ class Phrase {
         }
     }
 
+    getScore() {
+        return this._score
+    }
+
+    handleInput(inputTime: number) { //T Takes a keypress during the players turn and gives points and scores notes
+        let minTimeDiff: number = Infinity;
+        let closestNote: Note | null = null;
+        for(let note of this._notes) { // Finds the closest note to the press and the time difference
+            let timeDiff: number = Math.abs(note.getXPos() - inputTime);
+            if (timeDiff < minTimeDiff) {
+                minTimeDiff = timeDiff;
+                closestNote = note;
+            }
+        }
+        let pointsToAdd: number = this.pointsFromDiff(minTimeDiff);
+        if (pointsToAdd == -40 || closestNote.isScored()) { // Input was too far from note or note already struck
+            this._badInputCount ++;
+        } else {
+            this._score += pointsToAdd; // add the points
+            closestNote.score(); // score the note
+        }
+    }
+
+    pointsFromDiff(timeDiff: number) { //T takes a time difference and returns points
+        if (timeDiff <= 0.03) return 100;  // ≤30ms
+        if (timeDiff <= 0.08) return 80;   // ≤80ms
+        if (timeDiff <= 0.14) return 50;   // ≤140ms
+        if (timeDiff <= 0.2) return 20;    // ≤200ms
+        return -40; // too far out
+    }
     async drawNotes() {
         this._notes[0].draw();
         let runningNoteFrame: number = 0;
@@ -62,6 +101,7 @@ class Note {
     private _spacingMult: number = 5
     private _xPos: number | null = null; 
     private _duration: number | null = null;
+    private _scored: boolean = false; //T false if the user hasn't tried to hit the note, true otherwise
 
     constructor(xPos: number, duration: number){ 
         this._xPos = xPos; 
@@ -74,6 +114,14 @@ class Note {
 
     getDuration() {
         return this._duration
+    }
+
+    isScored() { //T tells you if a boolean is scored
+        return this._scored
+    }
+
+    score() { //T Makes _scored true
+        this._scored = true
     }
 
     draw() { 
