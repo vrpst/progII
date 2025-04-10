@@ -31,11 +31,16 @@ class Level {
     drawLine() {
         this._phrases[this._currentPhrase].drawLine();
     }
+
+    resetValues() {
+        this._phrases[this._currentPhrase].resetValues();
+    }
 }
 
 // phrase class 
 class Phrase {
     private _notes: Note[] = [];
+    private _drawn_notes: Note[] = [];
     private _currentFrame: number = -30*(START_SPACING/SPACING_MULT);
     private _score: number = 0; //T Total score for the phrase, summed by the Level
     private _badInputCount: number = 0 //T Total times the user has clicked too far from any note (fail state after too many)
@@ -50,6 +55,10 @@ class Phrase {
 
     getScore() {
         return this._score
+    }
+
+    resetValues() {
+        this._currentFrame = -30*(START_SPACING/SPACING_MULT);
     }
 
     handleInput(inputTime: number) { //T Takes a keypress during the players turn and gives points and scores notes
@@ -84,7 +93,7 @@ class Phrase {
         for (let i: number = 0; i < this._notes.length; i++) {
             let noteFrameLength: number; 
             if (i - 1 < 0) {
-                noteFrameLength= 0;
+                noteFrameLength = 0;
             }
             else {
                 let noteDuration: number = this._notes[i - 1].getDuration(); 
@@ -97,8 +106,9 @@ class Phrase {
                     console.log('finished drawing notes');
                     this._doneDrawing = true;
                     setTimeout(() => {
-                        clearInterval(gameInterval); 
+                        clearInterval(drawExampleInterval); 
                         console.log('trigger next stage of level');
+                        playerDrawn();
                     }, 1000);
                 }
             }
@@ -233,8 +243,29 @@ let levelInput: {[key: string]: number}[][] = [
 ];
 let levelObject: Level = new Level(levelInput); 
 
+// function for drawing example notes 
+let drawExampleInterval: NodeJS.Timeout;
+function drawExample() { 
+    levelObject.resetValues();
+    console.log('started drawing example notes');
+    drawExampleInterval = setInterval(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); //scrubs the canvas so the line can move along
+        levelObject.drawNotes();
+        levelObject.drawLine();
+    }, 1000/fps);
+}
+
+// function for drawing player inputs 
+let playerDrawnInterval: NodeJS.Timeout;
+function playerDrawn() {
+    levelObject.resetValues();
+    console.log('started drawing player notes');
+    drawExampleInterval = setInterval(() => {
+        // code to draw player inputs goes here
+    }, 1000/fps);
+}
+
 // set up drawing 
-let gameInterval: NodeJS.Timeout;
 if (canvas.getContext) {
     ctx = canvas.getContext('2d');
     if (ctx) {
@@ -251,12 +282,7 @@ if (canvas.getContext) {
         document.getElementById('start-button').addEventListener('click', () => {
             console.log('game start clicked');
             setTimeout(() => {
-                console.log('started drawing notes');
-                gameInterval = setInterval(() => {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height); //scrubs the canvas so the line can move along
-                    levelObject.drawNotes();
-                    levelObject.drawLine();
-                }, 1000/fps)
+                drawExample();
             }, 500);
         });
     }
