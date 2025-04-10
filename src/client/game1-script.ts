@@ -28,12 +28,21 @@ class Level {
     drawNotes() { 
         this._phrases[this._currentPhrase].drawNotes();
     }
+
+    drawPlayerNotes() {
+        this._phrases[this._currentPhrase].drawPlayerNotes();
+    }
+
     drawLine() {
         this._phrases[this._currentPhrase].drawLine();
     }
 
     resetValues() {
         this._phrases[this._currentPhrase].resetValues();
+    }
+
+    addPlayerNote() {
+        this._phrases[this._currentPhrase].addPlayerNote();
     }
 }
 
@@ -87,6 +96,7 @@ class Phrase {
         if (timeDiff <= 200) return 20;    // ≤200ms
         return -40; // too far out
     }
+
     async drawNotes() {
         let runningNoteFrame: number = 0;
         let done: boolean = false;
@@ -116,6 +126,26 @@ class Phrase {
         ctx.strokeStyle, ctx.fillStyle = red; //T Resets the canvas colour back to --red
         this._currentFrame += 1;
     }
+
+    async drawPlayerNotes() {
+        for (let note of this._drawn_notes) {
+            note.draw();
+        }
+        if (this._drawn_notes.length >= this._notes.length) {
+            setTimeout(() => {
+                clearInterval(playerDrawnInterval); 
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                console.log('phrase complete');
+            }, 1000);
+        }
+        ctx.strokeStyle, ctx.fillStyle = red; //T Resets the canvas colour back to --red
+        this._currentFrame += 1;
+    }
+
+    addPlayerNote() {
+        this._drawn_notes.push(new Note(this._currentFrame / fps, 0))
+    }
+
     drawLine() { //draws a line that follows along with the current frame
         let x = remToPixels(this._currentFrame / fps * SPACING_MULT + START_SPACING);
         ctx.strokeStyle = bad
@@ -168,6 +198,7 @@ class Note {
         if (timeDiff <= 140) this._accuracy = 2;   // okay
         if (timeDiff <= 200) this._accuracy = 3;    // bad
     }
+
     draw() { 
         if (ctx) {
             ctx.beginPath();
@@ -243,6 +274,19 @@ let levelInput: {[key: string]: number}[][] = [
 ];
 let levelObject: Level = new Level(levelInput); 
 
+// space press tracking 
+let spacePressedSinceCheck: boolean = false; 
+window.addEventListener('keydown', function (e) {
+    if (e.code === 'Space') {
+        spacePressedSinceCheck = true; 
+    }
+})
+function wasSpacePressed() {
+    let pressed = spacePressedSinceCheck;
+    spacePressedSinceCheck = false; 
+    return pressed 
+}
+
 // function for drawing example notes 
 let drawExampleInterval: NodeJS.Timeout;
 function drawExample() { 
@@ -260,8 +304,13 @@ let playerDrawnInterval: NodeJS.Timeout;
 function playerDrawn() {
     levelObject.resetValues();
     console.log('started drawing player notes');
-    drawExampleInterval = setInterval(() => {
-        // code to draw player inputs goes here
+    playerDrawnInterval = setInterval(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (wasSpacePressed()) {
+            levelObject.addPlayerNote();
+        }
+        levelObject.drawPlayerNotes();
+        levelObject.drawLine();
     }, 1000/fps);
 }
 
@@ -281,6 +330,7 @@ if (canvas.getContext) {
         // set up game loop 
         document.getElementById('start-button').addEventListener('click', () => {
             console.log('game start clicked');
+            document.getElementById('start-button').style.display = 'none';
             setTimeout(() => {
                 drawExample();
             }, 500);
