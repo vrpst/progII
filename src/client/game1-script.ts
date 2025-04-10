@@ -1,6 +1,6 @@
 declare var ctx: CanvasRenderingContext2D | null; 
-const fps: number = 30;
-const START_SPACING: number = 10; 
+const fps: number = 60;
+const START_SPACING: number = 5; 
 const SPACING_MULT: number = 5;
 function remToPixels(rem:number) {    
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -81,9 +81,15 @@ class Phrase {
     async drawNotes() {
         let runningNoteFrame: number = 0;
         let done: boolean = false;
-        for (let i: number = 1; i < this._notes.length; i++) {
-            let noteDuration: number = this._notes[i - 1].getDuration(); 
-            let noteFrameLength: number = noteDuration * fps; 
+        for (let i: number = 0; i < this._notes.length; i++) {
+            let noteFrameLength: number; 
+            if (i - 1 < 0) {
+                noteFrameLength= 0;
+            }
+            else {
+                let noteDuration: number = this._notes[i - 1].getDuration(); 
+                noteFrameLength = noteDuration * fps; 
+            }
             runningNoteFrame += noteFrameLength; 
             if (this._currentFrame >= runningNoteFrame) { 
                 this._notes[i].draw();
@@ -222,7 +228,7 @@ if (gameContainer) {
 
 // create level, phrases and notes with assumed input 
 let levelInput: {[key: string]: number}[][] = [
-    [{'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 1}, {'duration': 1, 'pitch': 0}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 1}, {'duration': 1, 'pitch': 0}],
+    [{'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 1}, {'duration': 1, 'pitch': 0}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 1}, {'duration': 1, 'pitch': 0}, {'duration': 1, 'pitch': 0}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 0}],
     [{'duration': 1, 'pitch': 1}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 0}]
 ];
 let levelObject: Level = new Level(levelInput); 
@@ -251,7 +257,7 @@ if (canvas.getContext) {
                     levelObject.drawNotes();
                     levelObject.drawLine();
                 }, 1000/fps)
-            }, 1000);
+            }, 500);
         });
     }
 }
