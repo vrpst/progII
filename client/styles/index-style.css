@@ -1,75 +1,76 @@
-#games-container { 
-    position: relative;
-    margin: auto; 
-    width: 60rem;
-    height: fit-content;
-    top: 7dvh;
-    margin-top: 3rem;
+#games-container {
+	position: relative;
+	margin: auto;
+	width: 60rem;
+	height: fit-content;
+	top: 7dvh;
+	margin-top: 3rem;
 }
 
 .game {
-    position: relative; 
-    width: 100%;
-    height: 15rem; 
-    margin-bottom: 3rem;
+	position: relative;
+	width: 100%;
+	height: 15rem;
+	margin-bottom: 3rem;
+	display: block;
 }
 
-#game1 { 
-    background-color: var(--red);
+#game1 {
+	background-color: var(--red);
 }
 
 #game2 {
-    background-color: var(--yellow);
+	background-color: var(--yellow);
 }
 
 #game3 {
-    background-color: var(--blue);
+	background-color: var(--blue);
 }
 
 #game4 {
-    background-color: var(--green);
+	background-color: var(--green);
 }
 
 .game-image {
-    background-color: var(--white);
-    position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
-    width: 14rem;
-    height: 14rem;
+	background-color: var(--white);
+	position: absolute;
+	top: 0.5rem;
+	left: 0.5rem;
+	width: 14rem;
+	height: 14rem;
 }
 
-.game-text-area { 
-    background-color: var(--white);
-    position: absolute; 
-    top: 0.5rem;
-    left: 15rem;
-    width: 44.5rem;
-    height: 14rem;
+.game-text-area {
+	background-color: var(--white);
+	position: absolute;
+	top: 0.5rem;
+	left: 15rem;
+	width: 44.5rem;
+	height: 14rem;
 }
 
 .game-text-container {
-    position: absolute;
-    top: 1rem;
-    left: 7rem;
-    width: 30rem;
-    height: 11rem;
+	position: absolute;
+	top: 1rem;
+	left: 7rem;
+	width: 30rem;
+	height: 11rem;
 }
 
 .title-container {
-    position: absolute;
-    top: 0;
-    width: fit-content;
-    height: fit-content;
-    left: 50%; 
-    transform: translate(-50%, 0);
+	position: absolute;
+	top: 0;
+	width: fit-content;
+	height: fit-content;
+	left: 50%;
+	transform: translate(-50%, 0);
 }
 
 .text-container {
-    position: absolute;
-    width: 100%;
-    height: fit-content;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
+	position: absolute;
+	width: 100%;
+	height: fit-content;
+	bottom: 0;
+	left: 50%;
+	transform: translate(-50%, 0);
 }
