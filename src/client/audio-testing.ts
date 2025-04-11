@@ -1,11 +1,8 @@
 // start audio
-const audio_context = new AudioContext()
-const audio_element = document.querySelector('audio')
-let audio = audio_context.createMediaElementSource(audio_element)
-audio.connect(audio_context.destination)
-
-const button = document.querySelector('button')
-button.addEventListener('click', () => {
-    audio_element.play()
-    console.log("PLAYING")
+const sound = new Audio('/assets/audio/1/1.wav')
+document.addEventListener("mousemove", function () {
+    sound.muted = false
+    console.log("DONE")  //  figure out what below is
+    //Uncaught (in promise) NotAllowedError: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD
+    sound.play()
 })
