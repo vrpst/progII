@@ -49,11 +49,11 @@ class Level {
 // phrase class 
 class Phrase {
     private _notes: Note[] = [];
-    private _drawn_notes: Note[] = [];
+    private _playerHits: PlayerHit[] = [];
     private _currentFrame: number = -30*(START_SPACING/SPACING_MULT);
-    private _score: number = 0; //T Total score for the phrase, summed by the Level
-    private _badInputCount: number = 0 //T Total times the user has clicked too far from any note (fail state after too many)
     private _doneDrawing: boolean = false //T To help in ending the draw phase
+    private _startTime: number = null//T Time the game is started
+    private _drawingTime: number = null//T Time taken to draw all of the notes, syncs the playback section up
     constructor(phrase: {[key: string]: number}[]) { 
         let currentX: number = 0; 
         for (let note of phrase) { 
@@ -61,40 +61,28 @@ class Phrase {
             currentX += note['duration'];
         }
     }
-
+    getNotes() {
+        return this._notes
+    }
     getScore() {
-        return this._score
+        let totalScore: number = 0;
+        let missCount: number = 0;
+        for (let hit of this._playerHits) {
+            let hitScore = hit.getScore();
+            totalScore += hitScore;
+            if (hitScore == -40) { //if it was a miss
+                missCount ++;
+                if (missCount == 5) { //too many misses
+                    return -1 //indicates disqualification
+                }
+            }
+        }
+        return totalScore
     }
 
     resetValues() {
         this._currentFrame = -30*(START_SPACING/SPACING_MULT);
-    }
-
-    handleInput(inputTime: number) { //T Takes a keypress during the players turn and gives points and scores notes
-        let minTimeDiff: number = Infinity; // this and input time are in milliseconds
-        let closestNote: Note | null = null;
-        for(let note of this._notes) { // Finds the closest note to the press and the time difference
-            let timeDiff: number = Math.abs(note.getXPos()*1000 - inputTime); // *1000 to get ms from s
-            if (timeDiff < minTimeDiff) {
-                minTimeDiff = timeDiff;
-                closestNote = note;
-            }
-        }
-        let pointsToAdd: number = this.pointsFromDiff(minTimeDiff);
-        if (pointsToAdd == -40 || closestNote.isScored()) { // Input was too far from note or note already struck
-            this._badInputCount ++;
-        } else {
-            this._score += pointsToAdd; // add the points
-            closestNote.score(minTimeDiff); // score the note
-        }
-    }
-
-    pointsFromDiff(timeDiff: number) { //T takes a time difference and returns points
-        if (timeDiff <= 30) return 100;  // ≤30ms
-        if (timeDiff <= 80) return 80;   // ≤80ms
-        if (timeDiff <= 140) return 50;   // ≤140ms
-        if (timeDiff <= 200) return 20;    // ≤200ms
-        return -40; // too far out
+        this._startTime = Date.now();
     }
 
     async drawNotes() {
@@ -115,6 +103,7 @@ class Phrase {
                 if (i === this._notes.length - 1 && !this._doneDrawing) {
                     console.log('finished drawing notes');
                     this._doneDrawing = true;
+                    this._drawingTime = Date.now() - this._startTime;
                     setTimeout(() => {
                         clearInterval(drawExampleInterval); 
                         console.log('trigger next stage of level');
@@ -128,14 +117,15 @@ class Phrase {
     }
 
     async drawPlayerNotes() {
-        for (let note of this._drawn_notes) {
-            note.draw();
+        for (let hit of this._playerHits) {
+            hit.draw();
         }
-        if (this._drawn_notes.length >= this._notes.length) {
+        if (Date.now() - this._startTime >= this._drawingTime) {
             setTimeout(() => {
                 clearInterval(playerDrawnInterval); 
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 console.log('phrase complete');
+                console.log(this.getScore())
             }, 1000);
         }
         ctx.strokeStyle, ctx.fillStyle = red; //T Resets the canvas colour back to --red
@@ -143,7 +133,8 @@ class Phrase {
     }
 
     addPlayerNote() {
-        this._drawn_notes.push(new Note(this._currentFrame / fps, 0))
+        this._playerHits.push(new PlayerHit(Date.now() - this._startTime, this))
+        console.log(Date.now()-this._startTime);
     }
 
     drawLine() { //draws a line that follows along with the current frame
@@ -157,8 +148,89 @@ class Phrase {
         ctx.lineWidth = remToPixels(0.5);
     }
 }
+class PlayerHit {
+    private _time: number | null = null; // time from the first note in seconds
+    private _note: Note | null = null; // the note the hit is for
 
-// note class 
+    constructor(time: number, phrase: Phrase) {
+        this._time = time/1000 - 30*(START_SPACING/SPACING_MULT)/fps;
+        let minTimeDiff: number = Infinity; // this and input time are in milliseconds
+        let closestNote: Note | null = null;
+        for(let note of phrase.getNotes()) { // Finds the closest note to the press and the time difference
+            let timeDiff: number = Math.abs(note.getXPos()*1000  - this._time*1000); // *1000 to get ms from s
+            if (timeDiff < minTimeDiff) {
+                minTimeDiff = timeDiff;
+                closestNote = note;
+            }
+        }
+        console.log(minTimeDiff)
+        if (minTimeDiff < 200 && !closestNote.isScored()) { // Input was too far from note or note already struck
+            this._note = closestNote;
+            closestNote.score(minTimeDiff);
+        }
+
+    }
+    getScore(): number {
+        if (this._note === null) {
+            return -40;
+        }
+        let accuracy: number = this._note.getAccuracy();
+        switch (accuracy) {
+            case 0:
+                return 100;
+            case 1:
+                return 80;
+            case 2:
+                return 40;
+            case 3:
+                return 20;
+        }
+    }
+    draw() { 
+        if (ctx) {
+            ctx.beginPath();
+            let accuracyText: string = ""
+            if (this._note === null) {
+                ctx.strokeStyle = red; 
+                ctx.fillStyle = red;
+                accuracyText = "miss";
+            } else {
+                switch (this._note.getAccuracy()) { //T Changes canvas colour to match the note accuracy
+                    case 0: 
+                        ctx.strokeStyle = perfect; 
+                        ctx.fillStyle = perfect; 
+                        accuracyText = "Perfect";
+                        break;
+                    case 1: 
+                        ctx.strokeStyle = great; 
+                        ctx.fillStyle = great; 
+                        accuracyText = "Great";
+                        break;
+                    case 2: 
+                        ctx.strokeStyle = okay; 
+                        ctx.fillStyle = okay; 
+                        accuracyText = "Okay";
+                        break;
+                    case 3:
+                        ctx.strokeStyle = bad; 
+                        ctx.fillStyle = bad;
+                        accuracyText = "Bad";
+                        break;
+                    default:
+                        ctx.strokeStyle = red; 
+                        ctx.fillStyle = red;
+                }   
+            }
+            let x = remToPixels(this._time * SPACING_MULT + START_SPACING); //HERE IT IS
+            let y = canvas.height/2;
+            ctx.arc(x, y, remToPixels(0.5), 0, 2*Math.PI);
+            ctx.strokeStyle = black
+            ctx.fillText(accuracyText, x, y - remToPixels(1));
+            ctx.stroke();
+        } 
+    }
+}
+// note class
 class Note {
     private _xPos: number | null = null; 
     private _duration: number | null = null;
@@ -192,11 +264,12 @@ class Note {
     }
 
     score(timeDiff: number) { //T Makes _scored true and updates accuracy
+
         this._scored = true;
         if (timeDiff <= 30) this._accuracy = 0;  // perfect
-        if (timeDiff <= 80) this._accuracy = 1;   // great
-        if (timeDiff <= 140) this._accuracy = 2;   // okay
-        if (timeDiff <= 200) this._accuracy = 3;    // bad
+        else if (timeDiff <= 80) this._accuracy = 1;   // great
+        else if (timeDiff <= 140) this._accuracy = 2;   // okay
+        else if (timeDiff <= 200) this._accuracy = 3;    // bad
     }
 
     draw() { 
