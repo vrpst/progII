@@ -1,23 +1,23 @@
 {
-  "main": "server",
-  "type": "module",
-  "scripts": {
-    "build": "tsc --noEmit && node build",
-    "start": "node .",
-    "dev": "npm run build && npm start",
-    "watch": "nodemon"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.0",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "nodemon": "^3.1.9",
-    "esbuild": "^0.25.1"
-  },
-  "dependencies": {
-    "@tonejs/midi": "^2.0.28",
-    "express": "^4.21.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  }
+    "main": "server",
+    "type": "module",
+    "scripts": {
+        "build": "tsc --noEmit && node build",
+        "start": "node .",
+        "dev": "npm run build && npm start",
+        "watch": "nodemon"
+    },
+    "devDependencies": {
+        "@types/express": "^5.0.0",
+        "@types/react": "^19.0.10",
+        "@types/react-dom": "^19.0.4",
+        "nodemon": "^3.1.9",
+        "esbuild": "^0.25.1"
+    },
+    "dependencies": {
+        "@tonejs/midi": "^2.0.28",
+        "express": "^4.21.2",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0"
+    }
 }
