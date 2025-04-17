@@ -1,3 +1,10 @@
+:root { 
+    --perfect: #1ccf00; 
+    --great: #eaff00; 
+    --okay: #ffb700;
+    --bad: #bd0000;
+    --outline: #000000;
+}
 #game-container { 
     position: relative;
     margin: auto; 
