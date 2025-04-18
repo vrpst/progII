@@ -17,19 +17,22 @@ function GameContainer({
 }) {
     return (
         <a href={href} id={id} className="game">
-            <div className="game-image">{children}</div>
             <div className="game-text-area">
-                <div className="game-text-container">
-                    <div className="title-container">
-                        <h2>{name}</h2>
-                    </div>
-                    <div className="text-container">
-                        <p>{description}</p>
-                    </div>
+                <div className="title-container">
+                    <h2>{name}</h2>
+                </div>
+                <div className="text-container">
+                    <p>{description}</p>
                 </div>
             </div>
             <div className="bracket-container">
                 <img src="assets/images/brace.svg"></img>
+            </div>
+            <div className="lines-container-bottom">
+                <img src="assets/images/lines.svg"></img>
+            </div>
+            <div className="lines-container-top">
+                <img src="assets/images/lines.svg"></img>
             </div>
         </a>
     );
