@@ -28,6 +28,9 @@ function GameContainer({
                     </div>
                 </div>
             </div>
+            <div className="bracket-container">
+                <img src="assets/images/brace.svg"></img>
+            </div>
         </a>
     );
 }
@@ -50,7 +53,8 @@ export default function Index() {
                     <GameContainer
                         href="game1.html"
                         id="game1"
-                        name="Rhythm Game"
+                        name="Rhythm Precision"
+                        description="Hear the beat, see the rhythm, and tap it back in perfect time! Test your memory and timing in this accuracy-focused rhythm match game."
                     />
                     <GameContainer id="game2" />
                     <GameContainer id="game3" />

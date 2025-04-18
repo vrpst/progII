@@ -1,3 +1,9 @@
+/*
+* {
+	border: 1px black solid;
+}
+*/
+
 #games-container {
 	position: relative;
 	margin: auto;
@@ -13,22 +19,6 @@
 	height: 15rem;
 	margin-bottom: 3rem;
 	display: block;
-}
-
-#game1 {
-	background-color: var(--red);
-}
-
-#game2 {
-	background-color: var(--yellow);
-}
-
-#game3 {
-	background-color: var(--blue);
-}
-
-#game4 {
-	background-color: var(--green);
 }
 
 .game-image {
@@ -62,8 +52,7 @@
 	top: 0;
 	width: fit-content;
 	height: fit-content;
-	left: 50%;
-	transform: translate(-50%, 0);
+	left: 0;
 }
 
 .text-container {
@@ -73,4 +62,17 @@
 	bottom: 0;
 	left: 50%;
 	transform: translate(-50%, 0);
+}
+
+.bracket-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 15rem;
+	width: 15rem;
+}
+
+img {
+	width: auto;
+	height: 100%;
 }
