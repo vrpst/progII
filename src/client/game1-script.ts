@@ -2,6 +2,9 @@ declare var ctx: CanvasRenderingContext2D | null;
 const fps: number = 60;
 const START_SPACING: number = 5; 
 const SPACING_MULT: number = 5;
+import { parse_midi } from "./midi-parser";
+import { MidiData } from "./midi-parser";
+
 function remToPixels(rem:number) {    
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 }
@@ -11,7 +14,7 @@ class Level {
     private _phrases: Phrase[] = [];
     private _currentPhrase: number = 0; 
 
-    constructor(level: {[key: string]: number}[][]) {
+    constructor(level: MidiData[][]) {
         for (let phrase of level) {
             this._phrases.push(new Phrase(phrase));
         }
@@ -54,7 +57,7 @@ class Phrase {
     private _doneDrawing: boolean = false //T To help in ending the draw phase
     private _startTime: number = null//T Time the game is started
     private _drawingTime: number = null//T Time taken to draw all of the notes, syncs the playback section up
-    constructor(phrase: {[key: string]: number}[]) { 
+    constructor(phrase: MidiData[]) { 
         let currentX: number = 0; 
         for (let note of phrase) { 
             this._notes.push(new Note(currentX, note['duration']));
@@ -341,11 +344,21 @@ if (gameContainer) {
 }
 
 // create level, phrases and notes with assumed input 
-let levelInput: {[key: string]: number}[][] = [
+let levelObject: Level = null
+parse_midi('../assets/audio/1/1.mid').then((res) => {
+    console.log(res)
+    levelObject = new Level(res); 
+})
+
+/*let levelInput: {[key: string]: number}[][] = [
     [{'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 1}, {'duration': 1, 'pitch': 0}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 1}, {'duration': 1, 'pitch': 0}, {'duration': 1, 'pitch': 0}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 0}],
     [{'duration': 1, 'pitch': 1}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 0}]
-];
-let levelObject: Level = new Level(levelInput); 
+];*/ 
+
+function play_audio(){  // UNHARDCODE THIS LATER
+    const sound = new Audio('/assets/audio/1/1.wav')
+    sound.play()
+}
 
 // space press tracking 
 let spacePressedSinceCheck: boolean = false; 
@@ -376,6 +389,7 @@ function drawExample() {
 let playerDrawnInterval: NodeJS.Timeout;
 function playerDrawn() {
     levelObject.resetValues();
+    play_audio()
     console.log('started drawing player notes');
     playerDrawnInterval = setInterval(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);

@@ -1,7 +1,7 @@
 import { Midi } from "@tonejs/midi";
 import { Note } from "@tonejs/midi/dist/Note";
 
-interface MidiData {
+export interface MidiData {
     pitch: string;
     duration: number;
     time: number;
