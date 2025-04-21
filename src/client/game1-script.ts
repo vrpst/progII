@@ -235,8 +235,9 @@ class Note {
     private _xPos: number | null = null; 
     private _duration: number | null = null;
     private _scored: boolean = false; //T false if the user hasn't tried to hit the note, true otherwise
-    private _accuracy: number = -1; /* T accuracy of user hit for a note
-    -1 -> not scored yet
+    private _accuracy: number = -1; // T accuracy of user hit for a note
+    private _sounded: boolean = false
+    /* -1 -> not scored yet
     0 -> perfect
     1 -> great
     2 -> okay
@@ -276,7 +277,11 @@ class Note {
         if (ctx) {
             ctx.beginPath();
             let accuracyText: string = ""
-            if (this._xPos != null) { 
+            if (this._xPos != null) {
+                if (this._sounded == false) {
+                    play_sound()
+                    this._sounded = true
+                } 
                 switch (this._accuracy) { //T Changes canvas colour to match the note accuracy
                     case 0: 
                         ctx.strokeStyle = perfect; 
@@ -339,7 +344,14 @@ let gameContainer = document.getElementById('game-inner') as HTMLElement | null;
 if (gameContainer) {
     gameContainer.appendChild(canvas);
 }
-
+// function to play sound
+function play_sound() {
+    const sound = new Audio('/assets/audio/1/transient.wav')
+    //document.addEventListener("keypress", function () {
+    sound.muted = false
+    console.log("DONE")
+    sound.play()
+}
 // create level, phrases and notes with assumed input 
 let levelInput: {[key: string]: number}[][] = [
     [{'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 1}, {'duration': 1, 'pitch': 0}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 1}, {'duration': 1, 'pitch': 0}, {'duration': 1, 'pitch': 0}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 0}],
