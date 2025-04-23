@@ -52,6 +52,11 @@ export default function Index() {
             </head>
             <body>
                 <div id="header-container"></div>
+                <div id="main-title-area">
+                    <div id="main-title-container">
+                        <h1>Beat Suite - Games</h1> 
+                    </div> 
+                </div> 
                 <div id="games-container">
                     <GameContainer
                         href="game1.html"

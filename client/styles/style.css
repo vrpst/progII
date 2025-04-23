@@ -3,7 +3,7 @@
     --white: #f8f8f3; 
     --red: #B0D0D3; 
     --green: #99D699;
-    --blue: #C1BADE;
+    --blue: #1e8ee9;
     --yellow: #FFC999; 
     --black: #1d1d1d;
     --grey: #acaaaa;
@@ -23,6 +23,20 @@ body {
     padding: 0;
     margin: 0; 
     background-color: var(--white);
+    overflow-x: hidden;
+}
+
+h1 {
+    color: var(--black);
+    font-size: 3rem;
+    font-family: "BaskervilleBold"; 
+    margin: 0;
+    padding: 0;
+    color: var(--black);
+    text-decoration: underline 0.125rem;
+    text-underline-offset: 1rem;
+    box-shadow: 0 0.125rem 0 var(--black);
+    padding-bottom: 0.6rem;
 }
 
 h2 {
