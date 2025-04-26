@@ -1,7 +1,12 @@
 declare var ctx: CanvasRenderingContext2D | null; 
+
+import { MidiData } from "./midi-parser";
+import { build_midi } from "./midi-parser";
+
 const fps: number = 60;
 const START_SPACING: number = 5; 
 const SPACING_MULT: number = 5;
+
 function remToPixels(rem:number) {    
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 }
@@ -11,7 +16,7 @@ class Level {
     private _phrases: Phrase[] = [];
     private _currentPhrase: number = 0; 
 
-    constructor(level: {[key: string]: number}[][]) {
+    constructor(level: MidiData[][]) {
         for (let phrase of level) {
             this._phrases.push(new Phrase(phrase));
         }
@@ -54,7 +59,7 @@ class Phrase {
     private _doneDrawing: boolean = false //T To help in ending the draw phase
     private _startTime: number = null//T Time the game is started
     private _drawingTime: number = null//T Time taken to draw all of the notes, syncs the playback section up
-    constructor(phrase: {[key: string]: number}[]) { 
+    constructor(phrase: MidiData[]) { 
         let currentX: number = 0; 
         for (let note of phrase) { 
             this._notes.push(new Note(currentX, note['duration']));
@@ -353,10 +358,16 @@ function play_sound() {
     sound.play()
 }
 // create level, phrases and notes with assumed input 
-let levelInput: {[key: string]: number}[][] = [
+let levelInput2: {[key: string]: number}[][] = [
     [{'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 1}, {'duration': 1, 'pitch': 0}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 1}, {'duration': 1, 'pitch': 0}, {'duration': 1, 'pitch': 0}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 0}],
     [{'duration': 1, 'pitch': 1}, {'duration': 0.5, 'pitch': 0}, {'duration': 1, 'pitch': 0}]
 ];
+console.log("LEVELINPUT2", levelInput2)
+
+let levelInput: MidiData[][] = build_midi(1)
+console.log(levelInput)
+console.log("LEVELINPUTB", levelInput[0])
+
 let levelObject: Level = new Level(levelInput); 
 
 // space press tracking 
